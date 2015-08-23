@@ -24,6 +24,8 @@ Requirements
      - the frames must have the file extension in their name
 	 - an absolute directory path must be used as the path_to_files argument
 """
+# todo
+# have arg for blank spacer icon
 
 from sys import exit
 import gobject # for callbacks
