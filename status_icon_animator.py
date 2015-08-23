@@ -75,9 +75,8 @@ class StatusIconAnimator():
 
         frame_path_prefix = args.path_to_frames + self.frame_filename_prefix
         for i in range(0, self.num_of_frames): # setup correct path names
-            self.frame_paths.append(frame_path_prefix + str(i + 1) + self.frame_format)
+            self.frame_paths.append(frame_path_prefix + str(i) + self.frame_format)
 
-        print(self.frame_paths)
         if self.num_of_frames == 1: # we don't need callbacks if only one frame has been supplied so just set icon and return
             self.icon.set_from_file(self.frame_paths[0])
             return

@@ -1,3 +1,7 @@
+![alt tag](http://i.imgur.com/91ZtDHE.gif)
+![alt tag](http://i.imgur.com/a71g9Uq.gif)
+![alt tag](http://i.imgur.com/zJJGyKV.gif)
+
 ** Status Icon Animator **
 
 - Creates a system tray icon that continually updates its icon according to the supplied frames. Making it appear as there is an animation in your system tray.
