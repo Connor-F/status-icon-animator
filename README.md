@@ -1,12 +1,14 @@
 ![alt tag](http://i.imgur.com/91ZtDHE.gif)
+
 ![alt tag](http://i.imgur.com/a71g9Uq.gif)
+
 ![alt tag](http://i.imgur.com/zJJGyKV.gif)
 
-** Status Icon Animator **
+#Status Icon Animator
 
 - Creates a system tray icon that continually updates its icon according to the supplied frames. Making it appear as there is an animation in your system tray.
 
-** Example usage **
+**Example usage**
 
 `python status_icon_animator.py /home/USER/.icons/status_icons/my_frames/`
 Where the `my_frames` directory contains all the images that you'd like to display
