@@ -12,7 +12,7 @@ Recommended usage
 
      - to convert gif to png/jpg use: http://animizer.net/en/gif-apng-splitter
      - the output frames will have to the names frame-001.png, frame-002.png etc
-     - to rename frame-001.png, frame-002.png etc.  to frame-1.png, frame-2.png etc. (which is the required format, notice the file extension IS included in the name) use the following command in the frames directory. Change .png to .jpg/.jpeg in the command if needed.
+     - to rename frame-001.png, frame-002.png etc.  to frame-0.png, frame-1.png etc. (which is the required format, notice the file extension IS included in the name) use the following command in the frames directory. Change .png to .jpg/.jpeg in the command if needed.
      - find -name '*.png' | awk 'BEGIN{ a=0 }{ printf "mv \"%s\" %s%d.png\n", $0, "frame-", a++ }' | bash
 	 
      ! sometimes the command fails on the first run, if it does fail: delete the output files and run the command again on a copy of the frames
@@ -44,7 +44,7 @@ class StatusIconAnimator():
     frame_time = 300
     num_of_frames = None
     icon = gtk.StatusIcon() # the system tray icon to be used for the animation
-    frame_counter = 1
+    frame_counter = 0
 
     def __init__(self):
         """
@@ -83,7 +83,7 @@ class StatusIconAnimator():
                 print("Warning: A low time per frame value will lead to high CPU usage.")
 
         frame_path_prefix = args.path_to_frames + self.frame_filename_prefix
-        for i in range(1, self.num_of_frames + 1): # setup correct path names
+        for i in range(0, self.num_of_frames + 1): # setup correct path names
             self.frame_paths.append(frame_path_prefix + str(i) + self.frame_format)
 
         if self.num_of_frames == 1: # we don't need callbacks if only one frame has been supplied so just set icon and return
@@ -98,11 +98,11 @@ class StatusIconAnimator():
         Changes the icons image to the next frame
         when called via the callback
         """
-        print("counter: " + str(self.frame_counter))
 
         if self.frame_counter == self.num_of_frames: # otherwise potential overflow
             self.frame_counter = 0 
 		
+        print("used counter: " + str(self.frame_counter))
         self.icon.set_from_file(self.frame_paths[self.frame_counter % self.num_of_frames]) # updates the icon with the next frame. Loops to start if at the last frame
 
         self.frame_counter += 1
