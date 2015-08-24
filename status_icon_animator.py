@@ -44,7 +44,7 @@ class StatusIconAnimator():
     frame_time = 300
     num_of_frames = None
     icon = gtk.StatusIcon() # the system tray icon to be used for the animation
-    frame_counter = 0
+    frame_counter = 1
 
     def __init__(self):
         """
@@ -67,6 +67,11 @@ class StatusIconAnimator():
             print("Absolute path to the frames must be specified with the -p option.\nAborting...")
             exit(-1)
 
+        if args.filetype == "jpg":
+            self.frame_format = "." + args.filetype
+        elif args.filetype == "jpeg":
+            self.frame_format = "." + args.filetype
+       
         self.num_of_frames = len(fnmatch.filter(os.listdir(args.path_to_frames), self.frame_filename_prefix + "*" + self.frame_format)) # count number of frames in the supplied directory
         if self.num_of_frames == 0:
             print("Error: No suitable frames found in " + args.path_to_frames + "\nAborting...")
@@ -76,13 +81,9 @@ class StatusIconAnimator():
             self.frame_time = args.time_per_frame
             if self.frame_time < 10:
                 print("Warning: A low time per frame value will lead to high CPU usage.")
-        if args.filetype == "jpg":
-            self.frame_format = "." + args.filetype
-        elif args.filetype == "jpeg":
-            self.frame_format = "." + args.filetype
 
         frame_path_prefix = args.path_to_frames + self.frame_filename_prefix
-        for i in range(0, self.num_of_frames): # setup correct path names
+        for i in range(1, self.num_of_frames + 1): # setup correct path names
             self.frame_paths.append(frame_path_prefix + str(i) + self.frame_format)
 
         if self.num_of_frames == 1: # we don't need callbacks if only one frame has been supplied so just set icon and return
@@ -97,6 +98,7 @@ class StatusIconAnimator():
         Changes the icons image to the next frame
         when called via the callback
         """
+        print("counter: " + str(self.frame_counter))
 
         if self.frame_counter == self.num_of_frames: # otherwise potential overflow
             self.frame_counter = 0 

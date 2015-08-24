@@ -26,6 +26,7 @@ For example a 3 frame PNG sequence should have the filenames: frame-0.png, frame
 - xfce bar
 
 **i3 bar**
+
 ![alt tag](http://i.imgur.com/91ZtDHE.gif)
 
 ![alt tag](http://i.imgur.com/a71g9Uq.gif)
