@@ -2,37 +2,34 @@
 Overview
      
      This program allows for system tray icons to be animated, like a GIF is playing in
-	 the system tray. Any png/jpg/jpeg images can be used and displayed.
+     the system tray. Any png/jpg/jpeg images can be used and displayed.
 
 Recommended usage
      
      The way I use this program is to find a GIF I'd like to display in the tray and then
-	 follow the steps below to split the GIF into seperate png/jpg files. This method doesn't
-	 have to be followed and any images can be used (don't have to be frames from a GIF)
+     follow the steps below to split the GIF into seperate png/jpg files. This method doesn't
+     have to be followed and any images can be used (don't have to be frames from a GIF)
 
-	 - to convert gif to png/jpg use: http://animizer.net/en/gif-apng-splitter
-	 - the output frames will have to the names frame-001.png, frame-002.png etc
-	 - to rename frame-001.png to frame-1.png (which is the required format) use the following command in the frames directory. Change .png to .jpg/.jpeg in the command if needed.
-	 - find -name '*.png' | awk 'BEGIN{ a=0 }{ printf "mv \"%s\" %s%d.png\n", $0, "frame-", a++ }' | bash
+     - to convert gif to png/jpg use: http://animizer.net/en/gif-apng-splitter
+     - the output frames will have to the names frame-001.png, frame-002.png etc
+     - to rename frame-001.png, frame-002.png etc.  to frame-1.png, frame-2.png etc. (which is the required format, notice the file extension IS included in the name) use the following command in the frames directory. Change .png to .jpg/.jpeg in the command if needed.
+     - find -name '*.png' | awk 'BEGIN{ a=0 }{ printf "mv \"%s\" %s%d.png\n", $0, "frame-", a++ }' | bash
 	 
-	 ! sometimes the command fails on the first run, if it does delete the output files and run the command again on a copy of the frames
+     ! sometimes the command fails on the first run, if it does fail: delete the output files and run the command again on a copy of the frames
 
 Requirements
 
-     - *nix OS 
+     - python-gtk2 package (Ubuntu repo name)
      - python 2
-     - the frames must have the file extension in their name
-	 - an absolute directory path must be used as the path_to_files argument
+     - an absolute directory path must be given with the -p (--path-to-frames) argument
 """
-# todo
-# have arg for blank spacer icon
 
 from sys import exit
 import gobject # for callbacks
 import gtk
 import argparse
-import fnmatch # for counting number of frames
-import os # for counting number of frames
+import fnmatch # counting number of frames
+import os # counting frames in supplied dir
 
 class StatusIconAnimator():
     """
@@ -45,21 +42,30 @@ class StatusIconAnimator():
     frame_filename_prefix = "frame-"
 
     frame_time = 300
-    num_of_frames = -1
+    num_of_frames = None
     icon = gtk.StatusIcon() # the system tray icon to be used for the animation
     frame_counter = 0
 
     def __init__(self):
         """
         Initialises all the neccessary variables needed
-        to display the frames in the system tray properly
+        to display the frames in the system tray properly and 
+        aborts the program if something is wrong
         """
 
         parser = argparse.ArgumentParser()
-        parser.add_argument("path_to_frames", help="The absolute path to the frames. For example: /home/USER/.icons/status_icons/my_frames/ The frames must follow this naming convention: frame-<NUMBER>.<FORMAT>\nWhere <NUMBER> starts at 0 and is incremented by 1 for the next frame and so on. <FORMAT> will default to png if no format is supplied\nFor example a 3 frame PNG sequence should have the filenames: frame-0.png, frame-1.png, frame-2.png")
+        parser.add_argument("-p", "--path-to-frames",  help="The absolute path to the frames. For example: /home/USER/.icons/status_icons/my_frames/ The frames must follow this naming convention: frame-<NUMBER>.<FORMAT>\nWhere <NUMBER> starts at 0 and is incremented by 1 for the next frame and so on. <FORMAT> will default to png if no format is supplied\nFor example a 3 frame PNG sequence should have the filenames: frame-0.png, frame-1.png, frame-2.png")
         parser.add_argument("-f", "--filetype", help="Specify the image format for the frames. Valid options: png, jpg, jpeg. Default is png.")
         parser.add_argument("-t", "--time-per-frame", help="Specify the time for each frame to be shown in milliseconds. Default is 300ms.", type=int)
+        parser.add_argument("-b", "--blank-icon", help="Creates a blank icon in the system tray to act as a spacer.", action="store_true")
         args = parser.parse_args()
+
+        if args.blank_icon: # icon is already blank
+            return
+
+        if args.path_to_frames == None:
+            print("Absolute path to the frames must be specified with the -p option.\nAborting...")
+            exit(-1)
 
         self.num_of_frames = len(fnmatch.filter(os.listdir(args.path_to_frames), self.frame_filename_prefix + "*" + self.frame_format)) # count number of frames in the supplied directory
         if self.num_of_frames == 0:
