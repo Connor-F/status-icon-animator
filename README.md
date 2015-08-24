@@ -17,9 +17,9 @@ The frames must follow this naming convention: frame-<NUMBER>.<FORMAT> Where <NU
 For example a 3 frame PNG sequence should have the filenames: frame-0.png, frame-1.png, frame-2.png 
 
 ##Options
-`-t` or `--time-per-frame` Specify the time in milliseconds each frame should be shown in the system tray. Default is 300ms.
-`-f` or `--filetype` Specify the filetype of the images to be used. Valid options: png, jpg, jpeg. Default is png.
-`-b` or `--blank-icon` This will create a blank icon in the system tray which is useful for creating `spacer` icons.
+- `-t` or `--time-per-frame` Specify the time in milliseconds each frame should be shown in the system tray. Default is 300ms.
+- `-f` or `--filetype` Specify the filetype of the images to be used. Valid options: png, jpg, jpeg. Default is png.
+- `-b` or `--blank-icon` This will create a blank icon in the system tray which is useful for creating `spacer` icons.
 
 ###Tested with
 - i3 bar
