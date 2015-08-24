@@ -102,7 +102,6 @@ class StatusIconAnimator():
         if self.frame_counter == self.num_of_frames: # otherwise potential overflow
             self.frame_counter = 0 
 		
-        print("used counter: " + str(self.frame_counter))
         self.icon.set_from_file(self.frame_paths[self.frame_counter % self.num_of_frames]) # updates the icon with the next frame. Loops to start if at the last frame
 
         self.frame_counter += 1
