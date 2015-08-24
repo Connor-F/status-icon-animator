@@ -11,7 +11,10 @@
 Where the `my_frames` directory contains all the jpg images that you'd like to display
 
 **Required arguments**
-`-p` or `--path-to-frames` Specify the ABSOLUTE path to the frames. For example: /home/USER/.icons/status_icons/my_frames/ The frames must follow this naming convention: frame-<NUMBER>.<FORMAT>\nWhere <NUMBER> starts at 0 and is incremented by 1 for the next frame and so on. <FORMAT> will default to png if no format is supplied\nFor example a 3 frame PNG sequence should have the filenames: frame-0.png, frame-1.png, frame-2.png 
+`-p` or `--path-to-frames` Specify the ABSOLUTE path to the frames. For example: `/home/USER/.icons/status_icons/my_frames/` 
+The frames must follow this naming convention: frame-<NUMBER>.<FORMAT> Where <NUMBER> starts at 0 and is incremented by 1 for the next frame and so on. 
+<FORMAT> will default to png if no format is supplied
+For example a 3 frame PNG sequence should have the filenames: frame-0.png, frame-1.png, frame-2.png 
 
 **Options**
 `-t` or `--time-per-frame` Specify the time in milliseconds each frame should be shown in the system tray. Default is 300ms.
